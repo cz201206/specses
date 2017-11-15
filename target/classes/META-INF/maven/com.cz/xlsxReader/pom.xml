@@ -59,6 +59,12 @@
 	    <artifactId>commons-lang3</artifactId>
 	    <version>3.7</version>
 	</dependency>
+	<!-- 提取汉字拼音首字母https://mvnrepository.com/artifact/com.belerweb/pinyin4j -->
+	<dependency>
+	    <groupId>com.belerweb</groupId>
+	    <artifactId>pinyin4j</artifactId>
+	    <version>2.5.1</version>
+	</dependency>
 	
 	    
   </dependencies>

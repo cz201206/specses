@@ -1,4 +1,4 @@
-package com.cz.xlsxReader.util;
+package com.cz.xlsxReader.data;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
-import com.cz.xlsxReader.dao.DataFromXlsx;
+import com.cz.xlsxReader.data.DataFromXlsx;
 
 public class DataFromXlsxTest {
 
