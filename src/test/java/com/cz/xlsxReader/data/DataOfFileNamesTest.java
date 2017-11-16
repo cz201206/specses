@@ -31,7 +31,7 @@ public class DataOfFileNamesTest {
 		}
 		System.out.println("总数："+fileNames.size());
 	}
-	//去掉参数后边的汉字且去重+去除特殊字符
+	//去掉参数后边的汉字+去重+去除特殊字符
 	@Test
 	public void fileNamesSubStringUniqueDSpaceVersionTest(){
 		Set<String> fileNames = new DataOfFileNames().fileNamesSubStringUniqueDSpaceVersion();

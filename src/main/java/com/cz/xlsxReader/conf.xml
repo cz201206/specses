@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<root>
 
-<xlsxes name = "xlsxes" fieldCount="3">
-		<directory id="xlsxDirectory" title="xlsx文件所在位置" name="F:/QQ/智能家庭产品参数表汇总"></directory>
-</xlsxes>
+	<xlsxes name = "xlsxes" fieldCount="3">
+			<directory id="xlsxDirectory" title="xlsx文件所在位置" name="F:/QQ/智能家庭产品参数表汇总"></directory>
+	</xlsxes>
+	
+	<ExtractedImages>
+		<directory id="image1Directory" title="仅提取第一张图片提取后存放位置" name="E:/imgFromXlsx/single"></directory>
+		<directory id="imagesDirectory" title="提取所有图片提取后存放位置" name="E:/imgFromXlsx/all"></directory>
+	</ExtractedImages>
+	
+</root>

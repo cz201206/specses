@@ -55,9 +55,9 @@ public class DataOfFileNames {
 		for (File file : files) {
 
 			++index;
-			String name = StringUtils.substringBefore(file.getName(),"参数");
-			if(fileNames.contains(name))logger.warn("有一个重复的位于："+index);
-			fileNames.add(name);
+			String fileName = StringUtils.substringBefore(file.getName(),"参数");
+			if(fileNames.contains(fileName))logger.warn("有一个重复的位于："+index);
+			fileNames.add(fileName);
 		}
 		return fileNames;
 	}
@@ -70,6 +70,8 @@ public class DataOfFileNames {
 				);
 		for (File file : files) {
 			String fileName = StringUtils.substringBefore(file.getName(),"参数");
+			++index;
+			if(fileNames.contains(fileName))logger.warn("有一个重复的位于："+index+" 文件名"+fileName);
 			fileName = StringUtils.replace(fileName," ","");//去掉空格
 			fileName = StringUtils.replace(fileName,"°","");//去掉
 			fileName = StringUtils.replace(fileName,"-","");//去掉

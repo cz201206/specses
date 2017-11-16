@@ -120,6 +120,13 @@ public class XlsxHelper {
 		
 		return list;
 	}
+	/**
+	 * 
+	 * @param dir 图片存储位置
+	 * @param name 图片统一名称
+	 * @return
+	 * 2017年11月16日 上午10:22:37
+	 */
 	public static List imagesTo(String dir,String name){
 		//所有图片文件
 		List list = workbook.getAllPictures();
@@ -152,6 +159,50 @@ public class XlsxHelper {
 				e.printStackTrace();
 			}
 	    }
+		return list;
+	}
+	/**
+	 * 
+	 * @param dir 图片存储位置
+	 * @param name 图片统一名称
+	 * @param n 提取n个图片
+	 * @return
+	 * 2017年11月16日 上午10:21:52
+	 */
+	public static List imageNTo(String dir,String name,int n){
+		//所有图片文件
+		List list = workbook.getAllPictures();
+		//指数变量
+		int i=0;
+		for (Iterator it = list.iterator(); it.hasNext(); ) {
+			//取得图片数据
+			PictureData pict = (PictureData)it.next();
+			//取得图片扩展名
+			String ext = pict.suggestFileExtension();
+			//取得图片二进制数据
+			byte[] data = pict.getData();
+			
+			//图片完整路径
+			String path = null;
+			FileOutputStream out;
+			//构造图片名称
+			if (ext.equals("jpeg")){
+				path =  dir+"/"+name+(++i)+".jpg";
+			}else if(ext.equals("png")){
+				path =  dir+"/"+name+(++i)+".png";
+			}
+			//定入文件
+			try {
+				out = new FileOutputStream(path);
+				out.write(data);
+				out.close();
+			} catch (Exception e) {
+				logger.error("写入或者关闭图片文件失败");
+				e.printStackTrace();
+			}
+			//提取达到N张后即返回
+			if(i==n)return list;
+		}
 		return list;
 	}
 }
