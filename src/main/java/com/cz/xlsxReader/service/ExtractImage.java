@@ -1,10 +1,13 @@
 package com.cz.xlsxReader.service;
 
+import static com.cz.xlsxReader.util.FileHelper.fileInClassPath;
 import static com.cz.xlsxReader.util.FileHelper.files;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -12,8 +15,11 @@ import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
+import com.cz.xlsxReader.data.DataFromXlsx;
 import com.cz.xlsxReader.data.DataOfFileNames;
-import com.cz.xlsxReader.util.FileHelper;
+import com.cz.xlsxReader.pojo.Product;
+import com.cz.xlsxReader.pojo.Specs;
+import com.cz.xlsxReader.util.FtlHelper;
 import com.cz.xlsxReader.util.PinyinHelper;
 import com.cz.xlsxReader.util.StringHelper;
 import com.cz.xlsxReader.util.XlsxHelper;
@@ -23,6 +29,7 @@ public class ExtractImage {
 	private static Logger logger = LogManager.getLogger(ExtractImage.class.getName());
 	private String xlsxDirectory;
 	private String image1Directory;
+	private List<Product> products = new ArrayList<Product>();
 	public ExtractImage() {
 		//读取classpath/conf中xlsx文件所在位置和图片存储位置
 		xlsxDirectory = XmlHelper.value(XmlHelper.getElementById("xlsxDirectory"), "name");
@@ -81,40 +88,65 @@ public class ExtractImage {
 	 */
 	@Test
 	public void extract1(){
-		//检查
-		//获取产品名
-		List<String> fileNames = new DataOfFileNames().fileNamesSubStringVersion();
-		for (String string : fileNames) {
-			System.out.println(string);
-		}
-		System.out.println("总数："+fileNames.size());
-		
-		//操作
 		//获取所有文件，con.xml配置xlsx文件所在位置
 		File[] files = files(xlsxDirectory);
 		//遍历所有文件
 		for (int i = 0; i < files.length; i++) {
+			Product product  = new Product();
 			//xlsx文件名
-			String fileName = files[i].getName();
-			//打印文件名称
-			System.out.println(i+1+"."+fileName);
+			String fileName = files[i].getName();product.fileName = fileName;
 			//xlsx文件对象
 			Workbook workbook = XlsxHelper.workbook(files[i]);
 			
+			//准备生成html数据
+			DataFromXlsx dataFromXlsx = new DataFromXlsx();
+			List<Specs> specses = dataFromXlsx.specs(files[i]);
+			File ftlDir = new File(fileInClassPath("com.cz.xlsxReader.res.ftl","ftl.ftl").getParent());
+			String ftlName = "data.ftl";
+			String outputDir = XmlHelper.value(XmlHelper.getElementById("outputDir"), "value");
+			String name = "nav.html";
+			Map<String,Object> root = new LinkedHashMap<String,Object>();
+			root.put("metaVersion", "元信息-版本");
+			root.put("specses", specses);
+			
 			//名字处理：去除参数之后的文字
-			fileName = StringUtils.substringBefore(files[i].getName(),"参数");
+			fileName = StringUtils.substringBefore(files[i].getName(),"参数");product.title = fileName;root.put("title", fileName);
 			//名字处理：汉字转拼音首字母
 			fileName = PinyinHelper.initial(fileName);
 			//名字处理：去除特殊字符
 			fileName = StringHelper.deleteChars(fileName, " ()（）°.:-");
 			//名字处理：全部小写
-			fileName = fileName.toLowerCase();
-
-			//打印文件名称
-			System.out.println(i+1+"."+fileName);
-			//提取第一张图片
-			XlsxHelper.imageNTo(image1Directory,fileName,1);
+			fileName = fileName.toLowerCase();product.name = fileName;products.add(product);
+			
+			//4.生成html数据
+			root.put("name", fileName);
+			name = fileName+".html";
+			FtlHelper.createFileFromFtl(ftlDir, ftlName, outputDir, name, root);
+			//1.提取第一张图片
+			//XlsxHelper.imageNTo(image1Directory,fileName,1);
 		}
+		
+		//打印产品详情
+		for (Product product : products) {
+			System.out.println(product);
+		}
+		
+		File ftlDir = new File(fileInClassPath("com.cz.xlsxReader.res.ftl","ftl.ftl").getParent());
+		String ftlName = "nav.ftl";
+		String outputDir = XmlHelper.value(XmlHelper.getElementById("outputDir"), "value");
+		String name = "nav.html";
+		Map<String,Object> root = new LinkedHashMap<String,Object>();
+		
+		root.put("metaVersion", "元信息-版本");
+		root.put("products", products);
+		//2.生成nav数据
+		FtlHelper.createFileFromFtl(ftlDir, ftlName, outputDir, name, root);
+		
+		//3.生成search数据
+		ftlName = "search.ftl";
+		name = "search.json";
+		FtlHelper.createFileFromFtl(ftlDir, ftlName, outputDir, name, root);
+		System.out.println("输出文件夹："+outputDir);
 		
 		logger.info("文件总量："+files.length);
 		

@@ -114,6 +114,7 @@ public class XlsxHelper {
 		
 		Row row = sheet.getRow(rowIndex_fieldCount[0]);
 		for(int i = 0;i< rowIndex_fieldCount[1];i++){
+			if(null==row)continue;
 			Cell cell = row.getCell(i);
 			list.add(cell+"");
 		}
@@ -187,9 +188,9 @@ public class XlsxHelper {
 			FileOutputStream out;
 			//构造图片名称
 			if (ext.equals("jpeg")){
-				path =  dir+"/"+name+(++i)+".jpg";
+				path =  dir+"/"+name+".jpg";
 			}else if(ext.equals("png")){
-				path =  dir+"/"+name+(++i)+".png";
+				path =  dir+"/"+name+".png";
 			}
 			//定入文件
 			try {

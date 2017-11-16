@@ -65,6 +65,12 @@
 	    <artifactId>pinyin4j</artifactId>
 	    <version>2.5.1</version>
 	</dependency>
+	<!-- 模板引擎 https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+	<dependency>
+	    <groupId>org.freemarker</groupId>
+	    <artifactId>freemarker</artifactId>
+	    <version>2.3.27-incubating</version>
+	</dependency>
 	
 	    
   </dependencies>

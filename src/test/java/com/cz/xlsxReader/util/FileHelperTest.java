@@ -11,8 +11,9 @@ public class FileHelperTest {
 	private static Logger logger = LogManager.getLogger(FileHelperTest.class.getName());
 	@Test 
 	public void fileInClassPathTest(){
-		File conf = fileInClassPath("com.cz.xlsxReader","conf.xml");
+		File conf = fileInClassPath("com.cz.xlsxReader.res.ftl","ftl.ftl");
 		System.out.println(conf);
+		System.out.println(conf.getParent());
 	}
 	@Test 
 	public void filesTest(){

@@ -1,0 +1,1 @@
+${metaVersion}from ftl
