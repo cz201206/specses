@@ -32,6 +32,6 @@
 		<switch id="isGenerateNav" value="true"/>
 		<switch id="isGenerateSearch" value="true"/>
 		<switch id="isGenerateData" value="true"/>
-		<switch id="isImageData" value="true"/>
+		<switch id="isImageData" value="false"/>
 	</switches>
 </root>
