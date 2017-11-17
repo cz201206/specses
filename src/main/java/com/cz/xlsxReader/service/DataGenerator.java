@@ -33,8 +33,8 @@ public class DataGenerator {
 	private List<Product> products = new ArrayList<Product>();
 	public DataGenerator() {
 		//读取classpath/conf中xlsx文件所在位置和图片存储位置
-		xlsxDirectory = XmlHelper.value(XmlHelper.getElementById("xlsxDirectory"), "name");
-		image1Directory = XmlHelper.value(XmlHelper.getElementById("image1Directory"), "name");
+		xlsxDirectory = XmlHelper.value(XmlHelper.getElementById("xlsxDirectory"), "value");
+		image1Directory = XmlHelper.value(XmlHelper.getElementById("image1Directory"), "value");
 	}
 	
 	//根据提取出的第一张照片来检查哪个文件中没有图片

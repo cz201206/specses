@@ -2,22 +2,30 @@
 <root>
 
 	<!-- xlsx文件位置 -->
-	<xlsxes name = "xlsxes" fieldCount="3">
-			<directory id="xlsxDirectory" title="测试单个文件" name="F:/project/specs/xlsx"></directory>
+	<xlsxes id = "xlsxes" name = "xlsxes" fieldCount="3" startRow = "2">
+			<directory id="xlsxDirectory" title="xlsx文件所在位置" value="F:/QQ/智能家庭产品参数表汇总"/>
+			<!-- 
+			<directory id="xlsxDirectory" title="测试单个文件" value="F:/project/specs/xlsx"></directory>
 			<directory id="xlsxDirectory_bak1" title="xlsx文件所在位置" name="F:/QQ/智能家庭产品参数表汇总"></directory>
+			 -->
 	</xlsxes>
 	
 	<!-- 提取照片 -->
 	<ExtractedImages>
+		<directory id="image1Directory" title="输出到服务器目录_图片" value="D:/server/nginx-1.11.10/html/speces/public/img/3smartDevice"/>
+		<!-- 
 		<directory id="image1Directory" title="测试单个文件" name="F:/project/specs/output"></directory>
 		<directory id="image1Directory_bak1" title="仅提取第一张图片提取后存放位置" name="E:/imgFromXlsx/single"></directory>
 		<directory id="imagesDirectory" title="提取所有图片提取后存放位置" name="E:/imgFromXlsx/all"></directory>
+		 -->
 	</ExtractedImages>
 	<!-- 生成html -->
 	<ftls>
-		<directory id="outputDir" title="测试单个文件" value="F:/project/specs/output"></directory>
-		<directory id="outputDir_bak2" title="输出文件存放位置" value="E:/ftloutput"></directory>
-		<directory id="outputDir_bak1" title="输出到服务器目录" value="D:/server/nginx-1.11.10/html/speces/data/3smartDevice/html"></directory>
+	<directory id="outputDir" title="输出到服务器目录" value="D:/server/nginx-1.11.10/html/speces/data/3smartDevice/html"></directory>
+		<!-- 
+		<directory id="outputDir" title="测试" value="F:/project/specs/output"></directory>
+		<directory id="outputDir" title="输出到服务器目录" value="D:/server/nginx-1.11.10/html/speces/data/3smartDevice/html"></directory>
+		 -->
 	</ftls>
 	<switches>
 		<switch id="isGenerateAllFile" value="true"/><!-- false -->

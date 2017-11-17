@@ -2,13 +2,14 @@ package com.cz.xlsxReader.data;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import com.cz.xlsxReader.pojo.Specs;
 import com.cz.xlsxReader.util.FileHelper;
@@ -38,7 +39,7 @@ public class DataFromXlsx {
 		rowCount = sheet.getLastRowNum();
 		for (int i = 0; i < rowCount; i++) {
 			//获取sheet中所有行中数据，int参数分别 为rowIndex和fieldCount
-			List<String> row = XlsxHelper.row(sheet, i,fieldCount);
+			List<String> row = XlsxHelper.row(sheet, i,fieldCount,true);
 			//将一行加入到总容器中
 			rows.add(row);
 		}
@@ -61,7 +62,7 @@ public class DataFromXlsx {
 		rowCount = sheet.getLastRowNum();
 		for (int i = 0; i < rowCount; i++) {
 			//获取sheet中所有行中数据，int参数分别 为rowIndex和fieldCount
-			List<String> row = XlsxHelper.row(sheet, i,fieldCount);
+			List<String> row = XlsxHelper.row(sheet, i,fieldCount,true);
 			//将一行加入到总容器中
 			rows.add(row);
 		}
@@ -94,10 +95,12 @@ public class DataFromXlsx {
 		}
 		//取得总行数
 		rowCount = sheet.getLastRowNum();
-		for (int i = 0; i < rowCount; i++) {
+		//有效起始行
+		int i = Integer.valueOf(XmlHelper.value(XmlHelper.getElementById("xlsxes"), "startRow"));
+		for (; i <= rowCount; i++) {
 			Specs specs = new Specs();
 			//获取sheet中所有行中数据，int参数分别 为rowIndex和fieldCount
-			List<String> row = XlsxHelper.row(sheet, i,fieldCount);
+			List<String> row = XlsxHelper.row(sheet, i,fieldCount,is2Field);
 			if(row.size()<2)continue;
 			//区分两列还是三列的参数表	
 			if(is2Field){
@@ -113,19 +116,21 @@ public class DataFromXlsx {
 		
 		return specses;
 	}
+	/**
+	 * 
+	 * @param sheet
+	 * @return
+	 * 2017年11月17日 下午12:17:04
+	 * 如果左侧前五列有效文字少于3个则视为三列式参数表
+	 */
 	private boolean check(Sheet sheet){
-		/*List<Row> rows = new ArrayList<Row>();
-		Set<>*/
-		int rowsNum = 3;
+		Set<Object> cellValues = new HashSet<Object>();
+		int rowsNum = 5;
 		for (int i = 0; i < rowsNum; i++) {
 			Object cellValue = sheet.getRow(i).getCell(0,MissingCellPolicy.RETURN_BLANK_AS_NULL);
-			if(null==cellValue){
-				return false;
-			}else{
-				System.out.println(cellValue);
-			}
+			cellValues.add(cellValue);
 		}
+		if(cellValues.size()<3)return false;
 		return true;
-		
 	}
 }

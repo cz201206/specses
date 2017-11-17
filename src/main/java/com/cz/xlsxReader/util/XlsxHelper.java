@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Shape;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.util.CellReference;
 
 public class XlsxHelper {
@@ -107,15 +108,19 @@ public class XlsxHelper {
 	/**
 	 * 获取一行的数据
 	 */
-	public static List<String> row(Sheet sheet,int ...rowIndex_fieldCount){
+	public static List<String> row(Sheet sheet,int rowIndex,int fieldCount,boolean is2Column){
 		
 		//返回值容器
 		List<String> list = new ArrayList<String>();
 		
-		Row row = sheet.getRow(rowIndex_fieldCount[0]);
-		for(int i = 0;i< rowIndex_fieldCount[1];i++){
+		Row row = sheet.getRow(rowIndex);
+		for(int i = 0;i< fieldCount;i++){
 			if(null==row)continue;
-			Cell cell = row.getCell(i);
+			Cell cell = row.getCell(i,MissingCellPolicy.RETURN_BLANK_AS_NULL);
+			//针对两列参数表
+			if(is2Column&&0==i&&cell==null)return list;
+			//针对三列参数表
+			else if(1==i&&cell==null)return list;
 			list.add(cell+"");
 		}
 		
