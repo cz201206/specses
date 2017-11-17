@@ -1,27 +1,29 @@
 package com.cz.xlsxReader.pojo;
 
 public class Specs {
-	public String name,title;
+	public String key,value;
 
-	public String getName() {
-		return name;
+	public String getKey() {
+		return key;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getValue() {
+		return value;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	@Override
 	public String toString() {
-		return "Specs [name=" + name + ", title=" + title + "]";
+		return "Specs [key=" + key + ", value=" + value + "]";
 	}
+
+	
 	
 }

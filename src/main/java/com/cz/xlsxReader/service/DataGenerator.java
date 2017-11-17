@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
+import com.cz.xlsxReader.App;
 import com.cz.xlsxReader.data.DataFromXlsx;
 import com.cz.xlsxReader.data.DataOfFileNames;
 import com.cz.xlsxReader.pojo.Product;
@@ -25,12 +26,12 @@ import com.cz.xlsxReader.util.StringHelper;
 import com.cz.xlsxReader.util.XlsxHelper;
 import com.cz.xlsxReader.util.XmlHelper;
 
-public class ExtractImage {
-	private static Logger logger = LogManager.getLogger(ExtractImage.class.getName());
+public class DataGenerator {
+	private static Logger logger = LogManager.getLogger(DataGenerator.class.getName());
 	private String xlsxDirectory;
 	private String image1Directory;
 	private List<Product> products = new ArrayList<Product>();
-	public ExtractImage() {
+	public DataGenerator() {
 		//读取classpath/conf中xlsx文件所在位置和图片存储位置
 		xlsxDirectory = XmlHelper.value(XmlHelper.getElementById("xlsxDirectory"), "name");
 		image1Directory = XmlHelper.value(XmlHelper.getElementById("image1Directory"), "name");
@@ -87,7 +88,7 @@ public class ExtractImage {
 	 * 2017年11月16日 上午10:34:09
 	 */
 	@Test
-	public void extract1(){
+	public void generate(){
 		//获取所有文件，con.xml配置xlsx文件所在位置
 		File[] files = files(xlsxDirectory);
 		//遍历所有文件
@@ -121,9 +122,12 @@ public class ExtractImage {
 			//4.生成html数据
 			root.put("name", fileName);
 			name = fileName+".html";
+			//是否生成data数据
+			if(App.isGenerateAllFile&&App.isGenerateData)
 			FtlHelper.createFileFromFtl(ftlDir, ftlName, outputDir, name, root);
 			//1.提取第一张图片
-			//XlsxHelper.imageNTo(image1Directory,fileName,1);
+			if(App.isGenerateAllFile&&App.isImageData)
+			XlsxHelper.imageNTo(image1Directory,fileName,1);
 		}
 		
 		//打印产品详情
@@ -140,13 +144,18 @@ public class ExtractImage {
 		root.put("metaVersion", "元信息-版本");
 		root.put("products", products);
 		//2.生成nav数据
+		//是否生成nav数据
+		if(App.isGenerateAllFile&&App.isGenerateNav)
 		FtlHelper.createFileFromFtl(ftlDir, ftlName, outputDir, name, root);
 		
 		//3.生成search数据
 		ftlName = "search.ftl";
 		name = "search.json";
-		FtlHelper.createFileFromFtl(ftlDir, ftlName, outputDir, name, root);
-		System.out.println("输出文件夹："+outputDir);
+		//是否生成search数据
+		if(App.isGenerateAllFile&&App.isGenerateSearch){
+			FtlHelper.createFileFromFtl(ftlDir, ftlName, outputDir, name, root);
+			System.out.println("输出文件夹："+outputDir);
+		}
 		
 		logger.info("文件总量："+files.length);
 		

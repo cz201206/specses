@@ -9,8 +9,8 @@
 	
 		<#list specses as spece>
 		<tr> 
-			<td style="font-weight: bold;">${spece.title}</td>
-			<td >${spece.name}</td>
+			<td style="font-weight: bold;">${spece.key}</td>
+			<td >${spece.value}</td>
 		</tr>
 		</#list>
 		
