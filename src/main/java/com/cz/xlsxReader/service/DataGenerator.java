@@ -68,13 +68,13 @@ public class DataGenerator {
 		
 		//操作
 		//获取所有文件，con.xml配置xlsx文件所在位置
-		File[] files = files(xlsxDirectory);
+		List<File> files = files(xlsxDirectory);
 		//遍历所有文件
-		for (int i = 0; i < files.length; i++) {
-			System.out.println(i+1+"."+files[i].getName());
+		for (int i = 0; i < files.size(); i++) {
+			System.out.println(i+1+"."+files.get(i).getName());
 		}
 
-		logger.info("文件总量："+files.length);
+		logger.info("文件总量："+files.size());
 		//提取所有图片
 		for (File file : files) {
 			Workbook workbook = XlsxHelper.workbook(file);
@@ -90,18 +90,18 @@ public class DataGenerator {
 	@Test
 	public void generate(){
 		//获取所有文件，con.xml配置xlsx文件所在位置
-		File[] files = files(xlsxDirectory);
+		List<File> files = files(xlsxDirectory);
 		//遍历所有文件
-		for (int i = 0; i < files.length; i++) {
+		for (int i = 0; i < files.size(); i++) {
 			Product product  = new Product();
 			//xlsx文件名
-			String fileName = files[i].getName();product.fileName = fileName;
+			String fileName = files.get(i).getName();product.fileName = fileName;
 			//xlsx文件对象
-			Workbook workbook = XlsxHelper.workbook(files[i]);
+			Workbook workbook = XlsxHelper.workbook(files.get(i));
 			
 			//准备生成html数据
 			DataFromXlsx dataFromXlsx = new DataFromXlsx();
-			List<Specs> specses = dataFromXlsx.specs(files[i]);
+			List<Specs> specses = dataFromXlsx.specs(files.get(i));
 			File ftlDir = new File(fileInClassPath("com.cz.xlsxReader.res.ftl","ftl.ftl").getParent());
 			String ftlName = "data.ftl";
 			String outputDir = XmlHelper.value(XmlHelper.getElementById("outputDir"), "value");
@@ -111,7 +111,7 @@ public class DataGenerator {
 			root.put("specses", specses);
 			
 			//名字处理：去除参数之后的文字
-			fileName = StringUtils.substringBefore(files[i].getName(),"参数");product.title = fileName;root.put("title", fileName);
+			fileName = StringUtils.substringBefore(files.get(i).getName(),"参数");product.title = fileName;root.put("title", fileName);
 			//名字处理：汉字转拼音首字母
 			fileName = PinyinHelper.initial(fileName);
 			//名字处理：去除特殊字符
@@ -157,7 +157,7 @@ public class DataGenerator {
 			System.out.println("输出文件夹："+outputDir);
 		}
 		
-		logger.info("文件总量："+files.length);
+		logger.info("文件总量："+files.size());
 		
 	}
 	

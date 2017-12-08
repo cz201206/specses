@@ -3,6 +3,7 @@ import static com.cz.xlsxReader.util.FileHelper.fileInClassPath;
 import static com.cz.xlsxReader.util.FileHelper.files;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,13 +18,13 @@ public class FileHelperTest {
 	}
 	@Test 
 	public void filesTest(){
-		File[] files = files("F:/QQ/智能家庭产品参数表汇总");
+		List<File> files = files("F:/QQ/智能家庭产品参数表汇总");
 		//遍历所有文件
-		for (int i = 0; i < files.length; i++) {
-			System.out.println(i+1+"."+files[i].getName());
+		for (int i = 0; i < files.size(); i++) {
+			System.out.println(i+1+"."+files.get(i).getName());
 		}
 
-		logger.info("文件总量："+files.length);
+		logger.info("文件总量："+files.size());
 		
 		
 	}

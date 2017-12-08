@@ -23,7 +23,7 @@ public class DataOfFileNames {
 	public List<String> fileNames(){
 		List<String> fileNames = new ArrayList<String>();
 		//根据文件中的“xlsx文件所在位置”获取该文件夹下所有文件名
-		File[] files = files(
+		List<File> files = files(
 				XmlHelper.value(XmlHelper.getElementById("xlsxDirectory"), "name")
 				);
 		for (File file : files) {
@@ -36,7 +36,7 @@ public class DataOfFileNames {
 	public List<String> fileNamesSubStringVersion(){
 		List<String> fileNames = new ArrayList<String>();
 		//根据文件中的“xlsx文件所在位置”获取该文件夹下所有文件名
-		File[] files = files(
+		List<File> files = files(
 				XmlHelper.value(XmlHelper.getElementById("xlsxDirectory"), "name")
 				);
 		for (File file : files) {
@@ -49,7 +49,7 @@ public class DataOfFileNames {
 	public Set<String> fileNamesSubStringUniqueVersion(){
 		Set<String> fileNames = new LinkedHashSet<String>();
 		//根据文件中的“xlsx文件所在位置”获取该文件夹下所有文件名
-		File[] files = files(
+		List<File> files = files(
 				XmlHelper.value(XmlHelper.getElementById("xlsxDirectory"), "name")
 				);
 		for (File file : files) {
@@ -65,7 +65,7 @@ public class DataOfFileNames {
 	public Set<String> fileNamesSubStringUniqueDSpaceVersion(){
 		Set<String> fileNames = new LinkedHashSet<String>();
 		//根据文件中的“xlsx文件所在位置”获取该文件夹下所有文件名
-		File[] files = files(
+		List<File> files = files(
 				XmlHelper.value(XmlHelper.getElementById("xlsxDirectory"), "name")
 				);
 		for (File file : files) {

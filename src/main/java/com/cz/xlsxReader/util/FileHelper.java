@@ -29,13 +29,19 @@ public class FileHelper {
 	}
 	
 	//获取给定路径下所有文件
-	public static File[] files(String directoryName){
+	public static List<File> files(String directoryName){
 		
 		File  directory = new File(directoryName);
 		
 		//如果路径存在则返回所有文件
 		if(directory.isDirectory()){
-			return directory.listFiles();
+			List<File> list = new ArrayList<File>();
+			File[] fileAndDirectories = directory.listFiles();
+			for (File file : fileAndDirectories) {
+				if(!file.isDirectory())list.add(file);
+			}
+			
+			return list;
 		}else{
 			logger.error("非路径，请检查路径名："+directoryName);
 			return null;
