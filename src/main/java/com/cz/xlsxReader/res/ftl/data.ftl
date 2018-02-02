@@ -1,7 +1,8 @@
+<meta charset="utf-8"/>
 <div class="panel panel-default">
 
 	<div class="panel-heading" style="text-align: center">
-		<img src="public/img/3smartDevice/${name}.png" width="200px;"/><br>
+		<img src="public/img/${productCategory}/${name}.png" width="200px;"/><br>
 		<h2><span class="label label-success" >${title}</span></h2>
 	</div>
 

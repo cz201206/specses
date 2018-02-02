@@ -23,8 +23,9 @@ public class App
 	}
 	public static void main( String[] args )
     {
+		String productCategory = "2TVBox";//1PhonePad 2TVBox 3smartDevice
         DataGenerator generator = new DataGenerator();
-        generator.generate();
+        generator.generate(productCategory);
     }
    
 }

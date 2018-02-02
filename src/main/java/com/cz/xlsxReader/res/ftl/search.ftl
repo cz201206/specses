@@ -1,3 +1,3 @@
 <#list  products as product>
-["3smartDevice","${product.name}","${product.title}"],
+["${productCategory}","${product.name}","${product.title}"],
 </#list>

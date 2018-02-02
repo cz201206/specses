@@ -86,9 +86,10 @@ public class DataGenerator {
 	 * 第个xslx文件仅提取一张图片
 	 * 
 	 * 2017年11月16日 上午10:34:09
+	 * @param productCategory 
 	 */
 	@Test
-	public void generate(){
+	public void generate(String productCategory){
 		//获取所有文件，con.xml配置xlsx文件所在位置
 		List<File> files = files(xlsxDirectory);
 		//遍历所有文件
@@ -109,9 +110,11 @@ public class DataGenerator {
 			Map<String,Object> root = new LinkedHashMap<String,Object>();
 			root.put("metaVersion", "元信息-版本");
 			root.put("specses", specses);
+			root.put("productCategory", productCategory);
 			
 			//名字处理：去除参数之后的文字
-			fileName = StringUtils.substringBefore(files.get(i).getName(),"参数");product.title = fileName;root.put("title", fileName);
+			fileName = StringUtils.substringBefore(files.get(i).getName(),".xlsx");
+			fileName = StringUtils.substringBefore(fileName,"参数");product.title = fileName;root.put("title", fileName);
 			//名字处理：汉字转拼音首字母
 			fileName = PinyinHelper.initial(fileName);
 			//名字处理：去除特殊字符
@@ -143,6 +146,7 @@ public class DataGenerator {
 		
 		root.put("metaVersion", "元信息-版本");
 		root.put("products", products);
+		root.put("productCategory", productCategory);
 		//2.生成nav数据
 		//是否生成nav数据
 		if(App.isGenerateAllFile&&App.isGenerateNav)

@@ -125,12 +125,13 @@ public class DataFromXlsx {
 	 */
 	private boolean check(Sheet sheet){
 		Set<Object> cellValues = new HashSet<Object>();
-		int rowsNum = 5;
+		int rowsNum = 6;
 		for (int i = 0; i < rowsNum; i++) {
 			Object cellValue = sheet.getRow(i).getCell(0,MissingCellPolicy.RETURN_BLANK_AS_NULL);
 			cellValues.add(cellValue);
 		}
-		if(cellValues.size()<3)return false;
+		System.out.println("前"+rowsNum+"列有"+cellValues.size()+"非空单元格");
+		if(cellValues.size()<=4)return false;
 		return true;
 	}
 }

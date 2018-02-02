@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -24,12 +26,16 @@ import org.apache.poi.ss.util.CellReference;
 
 public class XlsxHelper {
 	
-	//记录日志
+	/*
+	 * 记录日志
+	 */
 	private static Logger logger = LogManager.getLogger(XlsxHelper.class.getName());
 	
 	private static Workbook workbook;
 	private static Sheet sheet;
-	//所有sheet页
+	/*
+	 * 所有sheet页
+	 */
 	public static Workbook workbook(File xlsx){	
 		try {
 			workbook = WorkbookFactory.create(xlsx);
@@ -39,10 +45,24 @@ public class XlsxHelper {
 		}
 		return workbook;
 	}
-	//单个sheet页
+	/*
+	 * 单个sheet页
+	 */
 	public static Sheet sheet(int index){
 		sheet = workbook.getSheetAt(index);
 		return sheet;
+	}
+	/*
+	 * 简洁遍历
+	 */
+	public void iterate2(Workbook wb){
+		for (Sheet sheet : wb ) {
+	        for (Row row : sheet) {
+	            for (Cell cell : row) {
+	                // Do something here
+	            }
+	        }
+	    }
 	}
 	/**
 	 * 遍历表格
@@ -196,6 +216,11 @@ public class XlsxHelper {
 				path =  dir+"/"+name+".jpg";
 			}else if(ext.equals("png")){
 				path =  dir+"/"+name+".png";
+			}else if(ext.equals("tiff")){
+				path =  dir+"/"+name+".tiff";
+			}
+			else{
+				throw new RuntimeException("图片格式非jpg或者png"+ext);
 			}
 			//定入文件
 			try {
